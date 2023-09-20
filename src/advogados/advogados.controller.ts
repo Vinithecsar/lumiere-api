@@ -8,6 +8,7 @@ import {
   Put,
   Query,
   UseGuards,
+  Req,
 } from '@nestjs/common';
 import { AdvogadosService } from './advogados.service';
 import { CreateAdvogadoDto } from './dto/create-advogado.dto';
@@ -61,5 +62,13 @@ export class AdvogadosController {
   @ApiOkResponse({ type: AdvogadoEntity })
   async remove(@Param('id') id: string) {
     return await this.advogadosService.remove(id);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('proifle/me')
+  @ApiBearerAuth()
+  @ApiOkResponse()
+  async getTokenFromHeaders(@Req() req) {
+    return await this.advogadosService.findOne(req.user.id);
   }
 }

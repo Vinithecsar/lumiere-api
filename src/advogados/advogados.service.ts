@@ -37,7 +37,14 @@ export class AdvogadosService {
       return { error: `Advogado de id "${id}" não encontrado` };
     }
 
-    return advogado;
+    return {
+      id: advogado.id,
+      nome: advogado.nome,
+      email: advogado.email,
+      cnpj: advogado.cnpj,
+      historico: advogado.historico,
+      areaDeAtuacao: advogado.areaDeAtuacao,
+    };
   }
 
   async create(createAdvogadoDto: CreateAdvogadoDto) {
