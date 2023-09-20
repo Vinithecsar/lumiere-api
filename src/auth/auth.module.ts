@@ -15,7 +15,7 @@ export const jwtSecret = 'SegredoJwtDoLumiere'; // O correto é passar numa vari
     PassportModule,
     JwtModule.register({
       secret: jwtSecret,
-      signOptions: { expiresIn: '10m' }, // 30s, 7d, 24h
+      signOptions: { expiresIn: '7d' }, // 30s, 7d, 24h
     }),
     AdvogadosModule,
   ],
