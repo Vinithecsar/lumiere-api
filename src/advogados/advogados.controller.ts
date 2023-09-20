@@ -65,7 +65,7 @@ export class AdvogadosController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Get('proifle/me')
+  @Get('advogado/me')
   @ApiBearerAuth()
   @ApiOkResponse()
   async getTokenFromHeaders(@Req() req) {

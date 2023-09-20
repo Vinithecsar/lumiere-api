@@ -1,6 +1,7 @@
 # Lumiere-backend
 
 API relacionada com projeto Lumiere-frontend
+Para acessar a interface SwaggerUI, basta acessar http://localhost:3000/api
 
 ## Installation
 
