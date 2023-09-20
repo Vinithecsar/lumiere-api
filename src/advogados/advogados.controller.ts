@@ -20,7 +20,7 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { AdvogadoEntity } from './entities/advogado.entity';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 @Controller()
 @ApiTags('advogado')
