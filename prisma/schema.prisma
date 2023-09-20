@@ -1,0 +1,30 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Advogado {
+  id            String  @id @default(uuid())
+  nome          String
+  email         String  @unique
+  senha         String
+  cnpj          String  @unique
+  historico     String?
+  areaDeAtuacao String? //Deve ser escrita com um espaço entre as palavras para que seja realizado um .split(' ')
+  casos         Caso[]
+}
+
+model Caso {
+  id         String   @id @default(uuid())
+  descricao  String
+  createdAt  DateTime @default(now())
+  advogado   Advogado @relation(fields: [advogadoId], references: [id])
+  advogadoId String
+}
