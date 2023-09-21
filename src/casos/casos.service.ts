@@ -11,6 +11,14 @@ export class CasosService {
     return await this.prisma.caso.findMany({});
   }
 
+  async findOwnCases(id: string) {
+    return await this.prisma.caso.findMany({
+      where: {
+        advogadoId: id,
+      },
+    });
+  }
+
   async findOne(id: string) {
     const caso = await this.prisma.caso.findUnique({
       where: {
@@ -25,8 +33,13 @@ export class CasosService {
     return caso;
   }
 
-  async create(createCasoDto: CreateCasoDto) {
-    return await this.prisma.caso.create({ data: createCasoDto });
+  async create(createCasoDto: CreateCasoDto, id: string) {
+    return await this.prisma.caso.create({
+      data: {
+        descricao: createCasoDto.descricao,
+        advogadoId: id,
+      },
+    });
   }
 
   async update(id: string, updateCasoDto: UpdateCasoDto) {

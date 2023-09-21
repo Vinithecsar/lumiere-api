@@ -1,4 +1,9 @@
-import { PartialType } from '@nestjs/swagger';
-import { CreateCasoDto } from './create-caso.dto';
+import { ApiProperty } from '@nestjs/swagger';
 
-export class UpdateCasoDto extends PartialType(CreateCasoDto) {}
+export class UpdateCasoDto {
+  @ApiProperty()
+  descricao: string;
+
+  @ApiProperty()
+  advogadoId: string;
+}
