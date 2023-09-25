@@ -17,6 +17,7 @@ export class AdvogadosService {
         },
       },
       select: {
+        id: true,
         nome: true,
         email: true,
         cnpj: true,
