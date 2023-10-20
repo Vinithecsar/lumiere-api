@@ -21,9 +21,7 @@ export class AuthService {
 
     // Se não encontrar, retorna um erro
     if (!user) {
-      throw new NotFoundException(
-        `Advogado não encontrado para o email: ${email}`,
-      );
+      throw new NotFoundException(`Email ou senha incorretos!`);
     }
 
     // Checar se a senha está correta
