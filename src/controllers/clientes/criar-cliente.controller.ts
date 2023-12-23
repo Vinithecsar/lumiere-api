@@ -7,7 +7,7 @@ import {
 } from '@nestjs/common';
 import { ApiBody, ApiTags } from '@nestjs/swagger';
 import { hash } from 'bcryptjs';
-import { ZodValidationPipe } from 'src/pipes/zod-validation-pipe';
+import { ZodValidationPipe } from '../../pipes/zod-validation-pipe';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { z } from 'zod';
 import { CriarClienteBody } from './ClienteBody';

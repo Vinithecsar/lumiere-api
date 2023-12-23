@@ -9,7 +9,7 @@ import {
 import { JwtService } from '@nestjs/jwt';
 import { ApiBody, ApiProperty, ApiTags } from '@nestjs/swagger';
 import { compare } from 'bcryptjs';
-import { ZodValidationPipe } from 'src/pipes/zod-validation-pipe';
+import { ZodValidationPipe } from '../pipes/zod-validation-pipe';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { z } from 'zod';
 
