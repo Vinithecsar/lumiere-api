@@ -8,10 +8,10 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { CurrentUser } from 'src/auth/current-user-decorator';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
-import { UserPayload } from 'src/auth/jwt.strategy';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { CurrentUser } from '../../auth/current-user-decorator';
+import { JwtAuthGuard } from '../../auth/jwt-auth.guard';
+import { UserPayload } from '../../auth/jwt.strategy';
+import { PrismaService } from '../../prisma/prisma.service';
 
 @Controller('/pagamento/:id')
 @UseGuards(JwtAuthGuard)

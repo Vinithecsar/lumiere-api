@@ -1,6 +1,6 @@
 import { Controller, Get, HttpCode, Param, Query } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { PrismaService } from '../../prisma/prisma.service';
 
 @Controller('/advogado')
 @ApiTags('advogado')

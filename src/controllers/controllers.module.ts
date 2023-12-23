@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { AuthenticateController } from './authenticate.controller';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { PrismaService } from '../prisma/prisma.service';
 import { CriarCategoriaController } from './categorias/criar-categoria.controller';
 import { DeletarCategoriaController } from './categorias/deletar-categoria.controller';
 import { EditarCategoriaController } from './categorias/editar-categoria.controller';
