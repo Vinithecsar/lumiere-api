@@ -1,16 +1,22 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
+import { ConfigService } from '@nestjs/config';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import { Env } from './env';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, {
+    // logger: false
+  });
+
+  const configService: ConfigService<Env, true> = app.get(ConfigService);
+  const port = configService.get('PORT', { infer: true });
 
   const config = new DocumentBuilder()
-    .setTitle('Lumiere')
-    .setVersion('0.1')
+    .setTitle('Api do Lumiere')
+    .setVersion('0.9')
     .addBearerAuth()
     .build();
-
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document, {
     customCssUrl:
@@ -22,6 +28,6 @@ async function bootstrap() {
   });
 
   app.enableCors();
-  await app.listen(3000);
+  await app.listen(port);
 }
 bootstrap();

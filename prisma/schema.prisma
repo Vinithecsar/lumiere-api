@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -10,21 +7,83 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Usuario {
+  id         String   @id @default(uuid())
+  nome       String
+  email      String   @unique
+  senha_hash String
+  isAdvogado Boolean
+  criadoEm   DateTime @default(now())
+
+  advogado Advogado?
+  cliente  Cliente?
+
+  @@map("usuarios")
+}
+
+model Cliente {
+  id String @id @default(uuid())
+
+  usuarioId String  @unique
+  usuario   Usuario @relation(fields: [usuarioId], references: [id])
+
+  casos Caso[]
+
+  @@map("clientes")
+}
+
 model Advogado {
   id            String  @id @default(uuid())
-  nome          String
-  email         String  @unique
-  senha         String
   cnpj          String  @unique
   historico     String?
-  areaDeAtuacao String? //Deve ser escrita com um espaço entre as palavras para que seja realizado um .split(' ')
-  casos         Caso[]
+  areaDeAtuacao String? // Deve ser escrita com um espaço entre as palavras para que seja realizado um .split(' ')
+
+  usuarioId String  @unique
+  usuario   Usuario @relation(fields: [usuarioId], references: [id])
+
+  categorias Categoria[]
+  casos      Caso[]
+
+  @@map("advogados")
+}
+
+model Categoria {
+  id   String @id @default(uuid())
+  nome String @unique
+
+  advogados Advogado[]
+
+  @@map("categorias")
+}
+
+model Pagamento {
+  id           String    @id @default(uuid())
+  quantia      Float
+  pago         Boolean   @default(false)
+  criadoEm     DateTime  @default(now())
+  atualizadoEm DateTime? @updatedAt
+
+  caso   Caso   @relation(fields: [casoId], references: [id])
+  casoId String @unique
+
+  @@map("pagamentos")
 }
 
 model Caso {
-  id         String   @id @default(uuid())
-  descricao  String
-  createdAt  DateTime @default(now())
+  id           String    @id @default(uuid())
+  titulo       String
+  descricao    String
+  criadoEm     DateTime  @default(now())
+  atualizadoEm DateTime? @updatedAt
+
+  cliente   Cliente @relation(fields: [clienteId], references: [id])
+  clienteId String
+
   advogado   Advogado @relation(fields: [advogadoId], references: [id])
   advogadoId String
+
+  pagamento   Pagamento?
+  pagamentoId String?    @unique
+
+  @@map("casos")
 }

@@ -1,25 +1,28 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
-import { jwtSecret } from './auth.module';
-import { AdvogadosService } from 'src/advogados/advogados.service';
+import { Env } from 'src/env';
+import { z } from 'zod';
+
+const tokenPayloadSchema = z.object({
+  sub: z.string().uuid(),
+});
+
+export type UserPayload = z.infer<typeof tokenPayloadSchema>;
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
-  constructor(private advogadosService: AdvogadosService) {
+  constructor(config: ConfigService<Env, true>) {
+    const jwtSecret = config.get('JWT_SECRET', { infer: true });
+
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       secretOrKey: jwtSecret,
     });
   }
 
-  async validate(payload: { userId: string }) {
-    const advogado = await this.advogadosService.findOne(payload.userId);
-
-    if (!advogado) {
-      throw new UnauthorizedException();
-    }
-
-    return advogado;
+  async validate(payload: UserPayload) {
+    return tokenPayloadSchema.parse(payload);
   }
 }

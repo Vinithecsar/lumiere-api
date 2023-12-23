@@ -1,25 +1,26 @@
 import { Module } from '@nestjs/common';
-import { AuthService } from './auth.service';
-import { AuthController } from './auth.controller';
-import { PassportModule } from '@nestjs/passport';
+import { ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
-import { PrismaModule } from 'src/prisma/prisma.module';
-import { AdvogadosModule } from 'src/advogados/advogados.module';
+import { PassportModule } from '@nestjs/passport';
+import { Env } from 'src/env';
 import { JwtStrategy } from './jwt.strategy';
-
-export const jwtSecret = 'SegredoJwtDoLumiere'; // O correto é passar numa variável .env
 
 @Module({
   imports: [
-    PrismaModule,
     PassportModule,
-    JwtModule.register({
-      secret: jwtSecret,
-      signOptions: { expiresIn: '7d' }, // 30s, 7d, 24h
+    JwtModule.registerAsync({
+      inject: [ConfigService],
+      global: true,
+      useFactory(config: ConfigService<Env, true>) {
+        const jwtSecret = config.get('JWT_SECRET', { infer: true });
+
+        return {
+          signOptions: { expiresIn: '31d' },
+          secret: jwtSecret,
+        };
+      },
     }),
-    AdvogadosModule,
   ],
-  controllers: [AuthController],
-  providers: [AuthService, JwtStrategy],
+  providers: [JwtStrategy],
 })
 export class AuthModule {}
