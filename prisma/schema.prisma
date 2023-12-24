@@ -27,7 +27,8 @@ model Cliente {
   usuarioId String  @unique
   usuario   Usuario @relation(fields: [usuarioId], references: [id])
 
-  casos Caso[]
+  casos    Caso[]
+  reunioes Reuniao[]
 
   @@map("clientes")
 }
@@ -43,6 +44,7 @@ model Advogado {
 
   categorias Categoria[]
   casos      Caso[]
+  reunioes   Reuniao[]
 
   @@map("advogados")
 }
@@ -85,5 +87,27 @@ model Caso {
   pagamento   Pagamento?
   pagamentoId String?    @unique
 
+  Reuniao Reuniao[]
+
   @@map("casos")
+}
+
+model Reuniao {
+  id           String    @id @default(uuid())
+  descricao    String
+  localizacao  String
+  dataReuniao  DateTime
+  criadoEm     DateTime  @default(now())
+  atualizadoEm DateTime? @updatedAt
+
+  cliente   Cliente @relation(fields: [clienteId], references: [id])
+  clienteId String
+
+  advogado   Advogado @relation(fields: [advogadoId], references: [id])
+  advogadoId String
+
+  caso   Caso   @relation(fields: [casoId], references: [id])
+  casoId String
+
+  @@map("reunioes")
 }
