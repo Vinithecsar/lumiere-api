@@ -26,6 +26,13 @@ export class ProfileController {
           include: {
             categorias: true,
             casos: true,
+            reunioes: true,
+          },
+        },
+        cliente: {
+          include: {
+            casos: true,
+            reunioes: true,
           },
         },
       },
@@ -46,6 +53,7 @@ export class ProfileController {
         areaDeAtuacao: usuario.advogado?.areaDeAtuacao,
         casos: usuario.advogado?.casos,
         categorias: usuario.advogado?.categorias,
+        reunioes: usuario.advogado?.reunioes,
       };
     } else {
       return {
@@ -54,6 +62,8 @@ export class ProfileController {
         email: usuario.email,
         criadoEm: usuario.criadoEm,
         isADvogado: false,
+        casos: usuario.cliente?.casos,
+        reunioes: usuario.cliente?.reunioes,
       };
     }
   }
