@@ -61,7 +61,7 @@ export class ProfileController {
         nome: usuario.nome,
         email: usuario.email,
         criadoEm: usuario.criadoEm,
-        isADvogado: false,
+        isAdvogado: false,
         casos: usuario.cliente?.casos,
         reunioes: usuario.cliente?.reunioes,
       };
