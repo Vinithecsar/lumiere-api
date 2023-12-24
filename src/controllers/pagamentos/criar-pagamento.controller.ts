@@ -52,8 +52,8 @@ export class CriarPagamentoController {
     });
 
     if (
-      usuarioLogado?.isAdvogado == false ||
       !usuarioLogado ||
+      usuarioLogado.isAdvogado == false ||
       !usuarioLogado.advogado
     ) {
       throw new UnauthorizedException(

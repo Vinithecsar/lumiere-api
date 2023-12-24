@@ -20,6 +20,10 @@ import { LerPagamentosController } from './pagamentos/ler-pagamentos.controller'
 import { CriarPagamentoController } from './pagamentos/criar-pagamento.controller';
 import { EditarPagamentoController } from './pagamentos/editar-pagamento.controller';
 import { ApagarPagamentoController } from './pagamentos/deletar-pagamento.controller';
+import { LerReunioesController } from './reunioes/ler-reunioes.controller';
+import { CriarReuniaoController } from './reunioes/criar-reuniao.controller';
+import { DeletarReuniaoController } from './reunioes/deletar-reuniao.controller';
+import { EditarReuniaoController } from './reunioes/editar-reuniao.controller';
 
 @Module({
   controllers: [
@@ -43,6 +47,10 @@ import { ApagarPagamentoController } from './pagamentos/deletar-pagamento.contro
     CriarPagamentoController,
     EditarPagamentoController,
     ApagarPagamentoController,
+    LerReunioesController,
+    CriarReuniaoController,
+    DeletarReuniaoController,
+    EditarReuniaoController,
   ],
   providers: [PrismaService],
 })

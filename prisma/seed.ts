@@ -115,7 +115,7 @@ async function main() {
 
   id = randomUUID();
   let pagId = randomUUID();
-  await prisma.caso.upsert({
+  const caso1 = await prisma.caso.upsert({
     where: { id },
     update: {},
     create: {
@@ -154,6 +154,38 @@ async function main() {
         },
       },
       pagamentoId: pagId,
+    },
+  });
+
+  // Criar 2 reuniões
+
+  id = randomUUID();
+  await prisma.reuniao.upsert({
+    where: { id },
+    update: {},
+    create: {
+      id,
+      descricao: 'Descrição da reunião 1',
+      localizacao: 'Escritório Lumiere',
+      dataReuniao: new Date(2023, 12, 31),
+      clienteId: cliente1.id,
+      advogadoId: advogado1.id,
+      casoId: caso1.id,
+    },
+  });
+
+  id = randomUUID();
+  await prisma.reuniao.upsert({
+    where: { id },
+    update: {},
+    create: {
+      id,
+      descricao: 'Descrição da reunião 2',
+      localizacao: 'Escritório Curam',
+      dataReuniao: new Date(2024, 1, 21),
+      clienteId: cliente1.id,
+      advogadoId: advogado1.id,
+      casoId: caso1.id,
     },
   });
 }

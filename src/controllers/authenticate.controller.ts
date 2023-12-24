@@ -36,9 +36,9 @@ export class AuthenticateController {
     private jwt: JwtService,
   ) {}
 
-  @Post('loginAdvogado')
+  @Post('login')
   @ApiBody({ type: AuthenticateBody })
-  @HttpCode(201)
+  @HttpCode(200)
   @UsePipes(new ZodValidationPipe(authenticateBodySchema))
   async handleAdvogado(@Body() body: AuthenticateBodySchema) {
     const { email, senha } = body;
@@ -57,41 +57,7 @@ export class AuthenticateController {
 
     const isPasswordValid = await compare(senha, user.senha_hash);
 
-    if (!isPasswordValid || !user.isAdvogado) {
-      throw new UnauthorizedException(
-        'Credenciais de usuário não correspondem!',
-      );
-    }
-
-    const accessToken = this.jwt.sign({ sub: user.id });
-
-    return {
-      access_token: accessToken,
-    };
-  }
-
-  @Post('loginCliente')
-  @ApiBody({ type: AuthenticateBody })
-  @HttpCode(201)
-  @UsePipes(new ZodValidationPipe(authenticateBodySchema))
-  async handleCliente(@Body() body: AuthenticateBodySchema) {
-    const { email, senha } = body;
-
-    const user = await this.prisma.usuario.findUnique({
-      where: {
-        email,
-      },
-    });
-
-    if (!user) {
-      throw new UnauthorizedException(
-        'Credenciais de usuário não correspondem!',
-      );
-    }
-
-    const isPasswordValid = await compare(senha, user.senha_hash);
-
-    if (!isPasswordValid || user.isAdvogado) {
+    if (!isPasswordValid) {
       throw new UnauthorizedException(
         'Credenciais de usuário não correspondem!',
       );

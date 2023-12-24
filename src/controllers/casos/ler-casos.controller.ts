@@ -94,16 +94,6 @@ export class LerCasosController {
   ) {
     const { sub: userId } = user;
 
-    const usuario = await this.prisma.usuario.findUnique({
-      where: {
-        id: userId,
-      },
-      include: {
-        advogado: true,
-        cliente: true,
-      },
-    });
-
     const caso = await this.prisma.caso.findUnique({
       where: {
         id,
@@ -126,6 +116,16 @@ export class LerCasosController {
     if (!caso) {
       throw new NotFoundException('Caso não encontrado');
     }
+
+    const usuario = await this.prisma.usuario.findUnique({
+      where: {
+        id: userId,
+      },
+      include: {
+        advogado: true,
+        cliente: true,
+      },
+    });
 
     if (
       caso?.advogadoId === usuario?.advogado?.id ||
