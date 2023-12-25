@@ -50,6 +50,7 @@ export class ProfileController {
         criadoEm: usuario.criadoEm,
         cnpj: usuario.advogado?.cnpj,
         historico: usuario.advogado?.historico,
+        isAdvogado: true,
         areaDeAtuacao: usuario.advogado?.areaDeAtuacao,
         casos: usuario.advogado?.casos,
         categorias: usuario.advogado?.categorias,
